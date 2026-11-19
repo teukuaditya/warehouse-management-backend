@@ -9,7 +9,7 @@ const findFreeWHOperators = async()=>{
                 spk:{
                     none:{
                         status:{
-                           in: ['PENDING' || 'ON_PROCESS']
+                           in: ['PENDING', 'ON_PROCESS']
                         } 
                     }
                 }
@@ -58,8 +58,28 @@ const insertSPK = async (userId, materialId,quantityOrder,penerima) => {
 
 const findSpk = async () => {
     try {
-        const spk = await prisma.sPK.findMany()
-        return spk
+        const spkList = await prisma.sPK.findMany({
+            include: {
+                user: {
+                    select: {
+                        username: true
+                    }
+                },
+                material: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
+            orderBy: {
+                spkId: 'desc'
+            }
+        })
+        return spkList.map(s => ({
+            ...s,
+            nama_karyawan: s.user ? s.user.username : '-',
+            nama_barang: s.material ? s.material.name : '-'
+        }))
     } catch (error) {
         throw new Error('SPK not found')
     }
@@ -71,14 +91,26 @@ const findSpkByUser = async (userId) => {
                 userId: parseInt(userId)
             },
             include: {
+                user: {
+                    select: {
+                        username: true
+                    }
+                },
                 material: {
                     select: {
                         name: true
                     }
                 }
+            },
+            orderBy: {
+                spkId: 'desc'
             }
         })
-        return userSpk
+        return userSpk.map(s => ({
+            ...s,
+            nama_karyawan: s.user ? s.user.username : '-',
+            nama_barang: s.material ? s.material.name : '-'
+        }))
     } catch (error) {
         console.log(error)
         throw new Error('SPK by user not found')

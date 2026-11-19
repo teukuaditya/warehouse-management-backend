@@ -1,12 +1,13 @@
 const prisma = require('../db')
 
 async function insertMaterial(materialData) {
+    const qty = parseInt(materialData.quantity) || 0;
     const newMaterial = await prisma.material.create({
         data: {
             name: materialData.name,
             descriptions: materialData.descriptions,
-            quantity: materialData.quantity,
-            status: 'AVAILABLE'
+            quantity: qty,
+            status: materialData.status || (qty > 0 ? 'AVAILABLE' : 'UNAVAILABLE')
         }
     });
     return newMaterial;    
@@ -27,16 +28,25 @@ async function findMaterialById(id) {
 }
 
 async function editMaterial(id, materialData) {
+    const qty = materialData.quantity !== undefined ? parseInt(materialData.quantity) : undefined;
+    const dataToUpdate = {
+        name: materialData.name,
+        descriptions: materialData.descriptions,
+    };
+    if (qty !== undefined) {
+        dataToUpdate.quantity = qty;
+    }
+    if (materialData.status) {
+        dataToUpdate.status = materialData.status;
+    } else if (qty !== undefined && qty === 0) {
+        dataToUpdate.status = 'UNAVAILABLE';
+    }
+
     const updatedMaterial = await prisma.material.update({
         where: {
             materialId: parseInt(id),
         },
-        data: {
-            name: materialData.name,
-            descriptions: materialData.descriptions,
-            quantity: materialData.quantity,
-            status: 'AVAILABLE'
-        },
+        data: dataToUpdate,
     });
     return updatedMaterial;
 }

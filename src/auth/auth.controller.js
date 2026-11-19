@@ -27,7 +27,9 @@ router.post('/login', async (req, res, next) => {
         const { user, token } = await authService.login(username, password)
         res.status(200).json({
             data: {
+                userId: user.userId,
                 username: user.username,
+                email: user.email,
                 role: user.role,
                 token: token,
                 status: user.status

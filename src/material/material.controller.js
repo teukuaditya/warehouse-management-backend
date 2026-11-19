@@ -10,16 +10,16 @@ router.post('/', authorizeJWT, async (req, res) => {
         const newMaterial = await createMaterial(newMaterialData);
         res.status(201).json(newMaterial);
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ message: error.message });
     }
 });
 
 router.get('/', authorizeJWT, async (req, res) => {
     try {
         const materials = await getAllMaterials();
-        res.status(200).send(materials);
+        res.status(200).json(materials);
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -27,9 +27,9 @@ router.get('/:id', authorizeJWT, async (req, res) => {
     try {
         const materialId = parseInt(req.params.id);
         const material = await getMaterialById(materialId);
-        res.status(200).send(material);
+        res.status(200).json(material);
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ message: error.message });
     }
 });
 
@@ -38,9 +38,9 @@ router.put('/:id', authorizeJWT, async (req, res) => {
         const materialId = req.params.id;
         const materialData = req.body;
         const updatedMaterial = await editMaterialById(materialId, materialData);
-        res.send(updatedMaterial);
+        res.status(200).json(updatedMaterial);
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json({ message: error.message });
     }
 });
 
@@ -48,9 +48,9 @@ router.delete('/:id', authorizeJWT, async (req, res) => {
     try {
         const materialId = req.params.id;
         await deleteMaterialById(materialId);
-        res.status(204).json({ message: 'Material berhasil dihapus'});
+        res.status(200).json({ message: 'Material berhasil dihapus' });
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ message: error.message });
     }
 });
 
