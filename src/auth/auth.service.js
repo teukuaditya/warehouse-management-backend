@@ -25,10 +25,17 @@ const register = async (username, email, password) => {
       email,
       password: hashedPassword,
     };
-    const newUser = userRepository.createUser(user);
-    return newUser;
+    const newUser = await userRepository.createUser(user);
+    return {
+      userId: newUser.userId,
+      username: newUser.username,
+      email: newUser.email,
+      role: newUser.role,
+      status: newUser.status,
+      createdAt: newUser.createdAt,
+    };
   } catch (error) {
-    throw new Error("Register Failed");
+    throw new Error(error.message || "Register Failed");
   }
 };
 

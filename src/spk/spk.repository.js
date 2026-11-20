@@ -1,26 +1,27 @@
-const { parse } = require('dotenv');
 const prisma = require('../db')
 
-const findFreeWHOperators = async()=>{
-    try{
+const findFreeWHOperators = async () => {
+    try {
         const freeOperators = await prisma.user.findMany({
-            where:{
-                role:'WH_OPERATOR',
-                spk:{
-                    none:{
-                        status:{
-                           in: ['PENDING', 'ON_PROCESS']
-                        } 
+            where: {
+                role: 'WH_OPERATOR',
+                status: 'FREE',
+                spk: {
+                    none: {
+                        status: {
+                            in: ['PENDING', 'ON_PROCESS']
+                        }
                     }
                 }
             },
-            select:{
-                userId:true,
-                username:true,
+            select: {
+                userId: true,
+                username: true,
+                status: true,
             }
         });
         return freeOperators;
-    }catch(error){
+    } catch (error) {
         console.log(error);
         throw new Error('Failed to fetch free WH Operators')
     }

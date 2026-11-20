@@ -3,18 +3,20 @@ const router = express.Router()
 const authService = require('./auth.service')
 
 router.post('/register', async (req, res, next) => {
-    const { username,email,password } = req.body
-    console.log(req.body)
+    const { username, email, password } = req.body
     try {
-        const newUser = await authService.register(username,email,password)
+        const newUser = await authService.register(username, email, password)
         res.status(201).json({
             data: {
+                userId: newUser.userId,
                 username: newUser.username,
                 email: newUser.email,
-                password: newUser.password
-            }
+                role: newUser.role,
+                status: newUser.status,
+                createdAt: newUser.createdAt
+            },
+            message: "Registrasi berhasil"
         })
-
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

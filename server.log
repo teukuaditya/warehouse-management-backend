@@ -1,0 +1,38 @@
+server berjalan port : 3000
+{ username: 'testuser', password: 'password123' }
+{
+  userId: 1,
+  username: 'testuser',
+  email: 'test@example.com',
+  password: '$2b$10$piwaZCQHQPZq6NQGXQj1Q.SMlqinjPliBjFj8zHPLl7G7Xy7BRee6',
+  role: 'WH_OPERATOR',
+  status: 'FREE',
+  createdAt: 2026-11-20T02:44:47.844Z
+}
+true
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiV0hfT1BFUkFUT1IiLCJzdGF0dXMiOiJGUkVFIiwiaWF0IjoxNzk1MTQyNzQwLCJleHAiOjE3OTUxNDYzNDB9.zsFTjPY18Pf2ajGk-h1h0BTwtH-DIck6f1grO6go1iE
+{ username: 'testuser2', password: 'password123' }
+{
+  userId: 2,
+  username: 'testuser2',
+  email: 'test2@example.com',
+  password: '$2b$10$cOqp/xbBwqhFxjT2ZatopOIPs1eiCFpx0LfqemyAFmUaqWwaEb89q',
+  role: 'WH_OPERATOR',
+  status: 'FREE',
+  createdAt: 2026-11-20T02:45:54.677Z
+}
+true
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoidGVzdHVzZXIyIiwiZW1haWwiOiJ0ZXN0MkBleGFtcGxlLmNvbSIsInJvbGUiOiJXSF9PUEVSQVRPUiIsInN0YXR1cyI6IkZSRUUiLCJpYXQiOjE3OTUxNDI3NTcsImV4cCI6MTc5NTE0NjM1N30.7ZqvJZUOR3RZLDo3K9epFVIhsi5hfmfr_fwXSOXtsxA
+{ username: 'testuser', password: 'wrongpass' }
+{
+  userId: 1,
+  username: 'testuser',
+  email: 'test@example.com',
+  password: '$2b$10$piwaZCQHQPZq6NQGXQj1Q.SMlqinjPliBjFj8zHPLl7G7Xy7BRee6',
+  role: 'WH_OPERATOR',
+  status: 'FREE',
+  createdAt: 2026-11-20T02:44:47.844Z
+}
+false
+{ username: 'nonexistent', password: 'password123' }
+null

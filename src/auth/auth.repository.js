@@ -4,7 +4,11 @@ const createUser = async (userData) => {
         const newUser = await prisma.user.create({ data: userData })
         return newUser
     } catch (error) {
-        throw new Error('failed')
+        if (error.code === 'P2002') {
+            const field = error.meta?.target?.[0] || 'field';
+            throw new Error(`${field} sudah terdaftar`);
+        }
+        throw new Error(error.message || 'Register gagal');
     }
 }
 

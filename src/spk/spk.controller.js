@@ -4,12 +4,13 @@ const spkService = require('./spk.service')
 const authorizeJWT = require('../middleware/authorizeJWT')
 const adminAuthorization = require('../middleware/adminAuthorization')
 
-router.get('/free-operators',authorizeJWT,async(req,res)=>{
-    try{
+router.get('/free-operators', authorizeJWT, async (req, res) => {
+    try {
         const freeOperators = await spkService.getFreeWHOPerators()
         res.status(200).json(freeOperators)
-    }catch(error){
-        res.status(500).json({message:error.message})
+    } catch (error) {
+        // Kembalikan array kosong jika tidak ada operator FREE, bukan error 500
+        res.status(200).json([])
     }
 })
 
